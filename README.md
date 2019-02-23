@@ -1,13 +1,30 @@
-Inspired by article http://www.redblobgames.com/grids/hexagons/
+This is a digital tachistoscope and at the same time my MERN playground.
 
-Demo: https://codepen.io/RinatRezyapov/pen/bZLZEm
+If you don't know what is tachistoscope, read article [You're Not as Smart as You Could Be](http://www.panshin.com/critics/Renshaw/notassmart/notassmart1.html)
 
-I always wanted to create a game using javascript from scratch without using any framewroks or libraries.
+Demo: https://recognizzze.firebaseapp.com (Please don't use your real password)
 
-This is my first attempt. I decided to make video of this process and upload it to youtube, so check this out: https://www.youtube.com/playlist?list=PLshG9vHWHGOgPIs2oarf1ZBTho5Jbg9JF
+It uses:
 
-I'm not trying to use best practices while writing the code I just want to do it as simple as possible.
+[MLab](https://mlab.com) as MongoDB
 
-If you have an interesting project, especially game project feel free to contact me: rinat.rezyapov@gmail.com
+[Heroku](https://www.heroku.com/) as NodeJS hosting
 
-Thank you for attention!
+[Firebase](https://firebase.google.com) as Web hosting
+
+#### Client
+* Only React function components with Hooks (no classes)
+* TypeScript
+* FP-TS Option (aka Scala Option) to gracefully handle null and undefined
+* Only immutability-helper
+* react-beautiful-dnd
+* Redux to handle state
+* Optimistic updates
+* Webpack DllPlugin to improve build time performance
+* Entities can be transfered from server code to client code without any modifications
+
+#### Server
+* TypeScript
+* Express for Passport.js and WS for the rest
+* Basic JSON Web Token for sessionless auth
+* Also FP-TS Option
