@@ -1,18 +1,27 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Option, none, fromNullable } from 'fp-ts/lib/Option';
+import { useState } from 'react';
+import { Option, fromNullable } from 'fp-ts/lib/Option';
 
 import Paper from '@material-ui/core/Paper/Paper';
-import Grid from '@material-ui/core/Grid';
-
-import { Course, ME, User, Id, SearchQuery, ExpressionEq, ExpressionContains } from '../api/entities';
-import CourseCard from './CourseCard';
-import { useI18n } from '../hooks/useI18n';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { 
+  Course, 
+  ME, 
+  User, 
+  Id, 
+  SearchQuery, 
+  ExpressionEq, 
+  ExpressionContains 
+} from '../api/entities';
+
+import CourseCard from './CourseCard';
+
+import { useI18n } from '../hooks/useI18n';
 
 interface IProps {
   history: any;
@@ -24,7 +33,6 @@ interface IProps {
   createCourse(course: Course): void;
   deleteCourse(userId: Id<User>, courseId: Id<Course>): void;
   updateCourse(courseId: Id<Course>, data: { [key: string]: any }): void;
-  uploadCourseFile(courseId: Id<Course>, file: ArrayBuffer): void;
   searchThunk(query: SearchQuery): void;
 }
 
@@ -37,7 +45,6 @@ const Courses: React.FunctionComponent<IProps> = ({
   fetchCourses,
   deleteCourse,
   updateCourse,
-  uploadCourseFile,
   searchThunk,
 }: IProps) => {
 
@@ -83,8 +90,8 @@ const Courses: React.FunctionComponent<IProps> = ({
   }
 
   return (
-    <Grid container={true} justify='center' style={{ padding: '15px 0 0 0' }}>
-      <Grid item={true} style={{ margin: '15px 0' }}>
+    <div style={{ display: 'flex', margin: '0px auto 0px auto', padding: '15px 0 0 0' }}>
+      <div style={{ width: 250 }}>
         <Paper style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '15px' }}>
           <TextField
             label={t('Search value')}
@@ -116,8 +123,8 @@ const Courses: React.FunctionComponent<IProps> = ({
             </Button>
           </div>
         </Paper>
-      </Grid>
-      <Grid item={true} md={4} style={{ margin: '15px 15px' }}>
+      </div>
+      <div style={{ width: 400, margin: '0px 10px' }}>
         {coursesFetching ?
           <CircularProgress /> :
           courses.map(course =>
@@ -130,12 +137,11 @@ const Courses: React.FunctionComponent<IProps> = ({
               history={history}
               onCourseDelete={onCourseDelete}
               updateCourse={updateCourse}
-              uploadCourseFile={uploadCourseFile}
             />,
           )
         }
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 }
 

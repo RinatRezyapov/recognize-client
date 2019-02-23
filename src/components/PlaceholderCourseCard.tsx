@@ -1,42 +1,23 @@
 import * as React from 'react';
-import { useState } from 'react';
-import classnames from 'classnames';
-import { fromNullable, none, Option } from 'fp-ts/lib/Option';
+import { fromNullable, Option } from 'fp-ts/lib/Option';
 
-import { withStyles, Theme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-
-import { Course, ME, Id, User } from '../api/entities';
-import { useMaterialPopover } from '../hooks/useMaterialPopover';
-import { useI18n } from '../hooks/useI18n';
-import { styles } from '../styles/CourseCard';
-import { useMaterialDialog } from '../hooks/useMaterialDialog';
-import CourseCreateForm from '../forms/CourseCreateForm';
-import update from 'immutability-helper';
 import Button from '@material-ui/core/Button';
-import AvatarComponent from './AvatarComponent';
-import LinkButton from './LinkButton';
 import Divider from '@material-ui/core/Divider';
+
+import { Course, Id, User } from '../api/entities';
+
+import CourseCreateForm from '../forms/CourseCreateForm';
+import LinkButton from './LinkButton';
+
+import { useI18n } from '../hooks/useI18n';
+import { useMaterialDialog } from '../hooks/useMaterialDialog';
+
+import { styles } from './CourseCardStyles';
 
 interface IProps {
   userIdOpt: Option<Id<User>>;
@@ -62,7 +43,7 @@ const PlaceholderCourseCard = ({
           name: fromNullable(values.name),
           data: fromNullable(values.data),
           owner: userId,
-          picture: fromNullable(values.picture),
+          picture: values.picture,
           description: fromNullable(values.description),
           shortDescription: fromNullable(values.shortDescription),
           tags: fromNullable(values.tags),

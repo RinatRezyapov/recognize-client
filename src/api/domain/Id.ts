@@ -1,4 +1,3 @@
-
 import ProtocolObject from './ProtocolObject';
 import TypeId from './TypeId';
 

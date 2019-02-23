@@ -1,40 +1,21 @@
 import * as React from 'react';
-import { useState } from 'react';
-import classnames from 'classnames';
-import { fromNullable, none, Option } from 'fp-ts/lib/Option';
+import { fromNullable, none } from 'fp-ts/lib/Option';
 
-import { withStyles, Theme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 
-import { Course, ME, Id, User } from '../api/entities';
-import { useMaterialPopover } from '../hooks/useMaterialPopover';
-import { useI18n } from '../hooks/useI18n';
-import { styles } from '../styles/UserCard';
-import { useMaterialDialog } from '../hooks/useMaterialDialog';
-import CourseCreateForm from '../forms/CourseCreateForm';
-import update from 'immutability-helper';
-import { Tooltip } from '@material-ui/core';
+import { ME, User } from '../api/entities';
+import { styles } from './UserCardStyles';
 import AvatarComponent from './AvatarComponent';
+
+import { useMaterialPopover } from '../hooks/useMaterialPopover';
+import { useMaterialDialog } from '../hooks/useMaterialDialog';
 
 interface IProps {
   user: ME<User>;
@@ -46,7 +27,6 @@ const UserCard = ({
   user,
 }: IProps) => {
 
-  const [expanded, setExpanded] = useState(false);
   const { openPopover, closePopover, renderPopover } = useMaterialPopover();
   const { openDialog, closeDialog, renderDialog } = useMaterialDialog();
   const userNameOpt = fromNullable(user.entity.name);
@@ -56,7 +36,7 @@ const UserCard = ({
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        image={'https://static.memrise.com/uploads/course_photos/3146044000171229114509.png'}
+        image={require('../assets/defaultProfile.png')}
         title={'Name is undefined'}
       />
       <div style={{ position: 'absolute', top: 75, left: 10 }}>
@@ -64,7 +44,7 @@ const UserCard = ({
           userAvatar={userAvatarOpt}
           userName={userNameOpt}
           size={'medium'}
-          tooltipTitle={none}
+          title={none}
           onClick={() => { return }}
         />
       </div>

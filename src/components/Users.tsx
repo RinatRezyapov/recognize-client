@@ -1,9 +1,12 @@
 import * as React from 'react';
+
 import Paper from '@material-ui/core/Paper/Paper';
-import Grid from '@material-ui/core/Grid';
-import { ME, User, Id } from '../api/entities';
-import { useI18n } from '../hooks/useI18n';
+
+import { ME, User } from '../api/entities';
+
 import UserCard from './UserCard';
+
+import { useI18n } from '../hooks/useI18n';
 
 interface IProps {
   users: Array<ME<User>>;
@@ -16,22 +19,22 @@ const Users: React.FunctionComponent<IProps> = ({
   const { t } = useI18n();
 
   return (
-    <Grid container={true} wrap='nowrap' justify='center' style={{ padding: '15px 0 0 0' }}>
-      <Grid item={true} style={{ margin: '15px 0' }}>
+    <div style={{ display: 'flex', margin: '0px auto 0px auto', padding: '15px 0 0 0' }}>
+      <div style={{ width: 250 }}>
         <Paper style={{ padding: '15px' }}>
           Filter
         </Paper>
-      </Grid>
-      <Grid container={true} direction='row' style={{ width: '960px'}}>
+      </div>
+      <div style={{ width: 400, margin: '0px 10px' }}>
         {users
           .map((user, idx) =>
-            <Grid key={idx} item={true} style={{ margin: '15px 10px' }}>
-              <UserCard user={user} />
-            </Grid>,
+
+            <UserCard user={user} />
+
           )
         }
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 }
 

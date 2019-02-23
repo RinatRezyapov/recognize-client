@@ -1,7 +1,7 @@
 import ProtocolCommand from './ProtocolCommand';
 
 export class Send extends ProtocolCommand {
-  constructor(file: ArrayBuffer) {
+  constructor(file: string) {
     super('Files', 'Send', { file })
   }
 }

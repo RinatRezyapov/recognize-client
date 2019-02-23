@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
+import { isSome } from 'fp-ts/lib/Option';
 
 import Paper from '@material-ui/core/Paper/Paper';
 
 import SignUpForm from '../forms/SignUpForm';
 
 import { IState as AuthState } from '../reducers/auth';
-import { isSome } from 'fp-ts/lib/Option';
-import Grid from '@material-ui/core/Grid';
 
 interface IProps {
   location: string;
@@ -27,17 +26,19 @@ const SignUp = (props: IProps) => {
   }
 
   return (
-    <Grid
-      container={true}
-      direction='column'
-      alignItems='center'
-      justify={isSome(props.auth.token) ? 'flex-start' : 'center'}
-      style={{ flex: 1 }}
+    <div
+      style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: isSome(props.auth.token) ? 'flex-start' : 'center',
+        alignItems: 'center'
+      }}
     >
       <Paper style={{ width: '300px', padding: '30px' }}>
         <SignUpForm onSubmit={handleOnClick} />
       </Paper>
-    </Grid>
+    </div>
   );
 }
 

@@ -1,17 +1,16 @@
 import * as React from 'react';
-
-import { default as AvatarMaterial } from '@material-ui/core/Avatar';
 import { Option, isNone } from 'fp-ts/lib/Option';
-import { useI18n } from '../hooks/useI18n';
+import Tooltip from '@material-ui/core/Tooltip';
+import { default as AvatarMaterial } from '@material-ui/core/Avatar';
 import { Id } from '../api/entities';
+import { useI18n } from '../hooks/useI18n';
 import { generateFileLink } from '../utils/converters';
-import { grey } from '@material-ui/core/colors';
 
 interface IProps {
   userName: Option<string>;
   userAvatar: Option<Id<File>>;
+  title: Option<string>;
   size: 'small' | 'medium' | 'large';
-  tooltipTitle: Option<string>;
   onClick: (evt: any) => void;
 }
 
@@ -44,7 +43,7 @@ const AvatarComponent = ({
   userAvatar,
   onClick,
   size,
-  tooltipTitle,
+  title
 }: IProps) => {
 
   const { t } = useI18n();
@@ -68,27 +67,22 @@ const AvatarComponent = ({
     }
   }
 
-  return (
-    <>
-      {
-        isNone(userAvatar) ?
-          <AvatarMaterial
-            alt={userNameValue}
-            src={userAvatarValue}
-            style={getSize()}
-            onClick={onClick}
-          >
-            U
-          </AvatarMaterial> :
-          <AvatarMaterial
-            alt={userNameValue}
-            src={userAvatarValue}
-            style={getSize()}
-            onClick={onClick}
-          />
-      }
-    </>
-  );
+  const renderAvatar = () => {
+    return <AvatarMaterial
+      alt={userNameValue}
+      src={userAvatarValue}
+      style={getSize()}
+      onClick={onClick}
+    />
+  }
+
+  const wrapToTooltip = (element: React.ReactElement<any>) => {
+    return <Tooltip title={t('Upload new image')}>
+      {element}
+    </Tooltip>
+  }
+
+  return isNone(title) ? renderAvatar() : wrapToTooltip(renderAvatar())
 }
 
 export default AvatarComponent;

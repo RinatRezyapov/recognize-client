@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions';
-import { User, Id, Course, ME } from '../api/entities';
-import { Option } from 'fp-ts/lib/Option';
+import { Course, ME } from '../api/entities';
 
 export const COURSES_FETCHING = 'Courses.Fetching';
 export const coursesFetching = createAction(COURSES_FETCHING);

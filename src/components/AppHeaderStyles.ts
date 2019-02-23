@@ -1,5 +1,4 @@
 import { Theme } from '@material-ui/core/styles';
-import { grey } from '@material-ui/core/colors';
 
 export const styles = (theme: Theme) => ({
   root: {

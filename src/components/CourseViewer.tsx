@@ -2,35 +2,14 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { fromNullable, isNone } from 'fp-ts/lib/Option';
 
-import { Course, ME, Id } from '../api/entities';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { green, red, teal } from '@material-ui/core/colors';
-import styled from '../typings/styledComponents';
+
+import { Course, ME, Id } from '../api/entities';
+
 import { getRandomInt } from '../utils/random';
 
-const StyledDiv = styled.div<{ background: string }>`
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 0 0 0;
-    background-color: ${props => props.background};
-    transition: background-color 0.25s linear;
-    color: palevioletred;
-    font-size: 1.5em;
-    text-align: center;
-  `;
-
-const StyledSpan = styled.div`
-    color: white;
-    font-size: 2em;
-    text-align: center;
-    padding: 15px;
-    min-height: 100px;
-  `;
+import { StyledDiv, StyledSpan } from './CourseViewerStyles';
 
 interface IProps {
   userCourses: Array<ME<Course>>;
@@ -120,13 +99,14 @@ const CourseViewer = ({
   }
 
   return (
-
-    <Grid
-      container={true}
-      justify='center'
-      alignItems='center'
-      direction='column'
-      style={{ flex: 1 }}
+    <div
+      style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
     >
       <StyledDiv
         background={background}
@@ -138,7 +118,7 @@ const CourseViewer = ({
           onChange={onUserInputChange}
         />
       </StyledDiv>
-    </Grid>
+    </div>
   );
 }
 

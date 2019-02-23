@@ -88,6 +88,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader" },
+      { test: /\.css$/, loader: "style-loader!css-loader" },
       {
         test : /\.(svg|gif|png)/,
         exclude: /(node_modules)/,

@@ -1,8 +1,11 @@
 import * as React from 'react';
+import { Option } from 'fp-ts/lib/Option';
+
+import { Id } from '../api/entities';
+
 import SettingsForm from '../forms/SettingsForm';
 import { useI18n } from '../hooks/useI18n';
-import { Option } from 'fp-ts/lib/Option';
-import { Id } from '../api/entities';
+
 import { generateFileLink } from '../utils/converters';
 
 interface IProps {

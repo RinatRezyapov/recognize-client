@@ -1,20 +1,29 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Option, none, fromNullable } from 'fp-ts/lib/Option';
+import update from 'immutability-helper';
+import { Option, fromNullable, some } from 'fp-ts/lib/Option';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+
 import Paper from '@material-ui/core/Paper/Paper';
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
 import { Course, ME, User, Id } from '../api/entities';
-import CourseCard from './CourseCard';
-import { useI18n } from '../hooks/useI18n';
+
 import AvatarComponent from './AvatarComponent';
-import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
-import Dropzone from 'react-dropzone';
-import { uploadFile } from '../thunks/files';
-import update from 'immutability-helper';
 import PlaceholderCourseCard from './PlaceholderCourseCard';
+import ImageCropper from './ImageCropper';
+import DropzoneRenderer from './DropzoneRenderer';
+import CourseCard from './CourseCard';
+
+import { useI18n } from '../hooks/useI18n';
+import { useMaterialDialog } from '../hooks/useMaterialDialog';
+
+import { uploadFile } from '../thunks/files';
+
+import { styles, getListStyle, getItemStyle } from './ProfileStyles';
+
+
 
 interface IProps {
   history: any;
@@ -23,27 +32,13 @@ interface IProps {
   userAvatarOpt: Option<Id<File>>;
   courses: Array<ME<Course>>;
   userCourses: Array<Id<Course>>;
-  fetchCoursesByUserId(userId: Id<User>): void;
+  classes: any;
   fetchCoursesByIds(courseIds: Array<Id<Course>>): void;
   createCourse(course: Course): void;
   deleteCourse(userId: Id<User>, courseId: Id<Course>): void;
   updateCourse(courseId: Id<Course>, data: { [key: string]: any }): void;
   updateUser(userId: Id<User>, data: { [key: string]: any }): void;
-  uploadCourseFile(courseId: Id<Course>, file: ArrayBuffer): void;
 }
-
-const grid = 8;
-
-const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
-  userSelect: 'none',
-  margin: `0 0 ${grid}px 0`,
-  background: isDragging ? 'lightgreen' : 'transparent',
-  ...draggableStyle,
-});
-
-const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? 'lightblue' : 'transparent',
-});
 
 const Profile: React.FunctionComponent<IProps> = ({
   history,
@@ -52,13 +47,12 @@ const Profile: React.FunctionComponent<IProps> = ({
   userAvatarOpt,
   userCourses,
   courses,
-  fetchCoursesByUserId,
   fetchCoursesByIds,
   createCourse,
   deleteCourse,
   updateCourse,
   updateUser,
-  uploadCourseFile,
+  classes,
 }: IProps) => {
 
   const { t } = useI18n();
@@ -67,26 +61,41 @@ const Profile: React.FunctionComponent<IProps> = ({
     fetchCoursesByIds(userCourses)
   }, []);
 
+  const { openDialog, closeDialog, renderDialog } = useMaterialDialog();
+
   const onCourseDelete = (courseId: Id<Course>) => {
     userIdOpt.map((v: Id<User>) => deleteCourse(v, courseId));
   }
 
-  const onAvatarFileDrop = (files: any) => {
-    if (files.length === 0) {
-      return
-    }
-    const file = files[files.length - 1];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = function() {
-      fromNullable(reader.result)
-        .map(result => {
-          uploadFile(result as any)
-            .then(response => {
-              userIdOpt.map(userId => updateUser(userId, { avatar: fromNullable(response) }))
-            })
-        })
-    }
+  const uploadCropResult = (result: any) => {
+    uploadFile(result)
+      .then(response => userIdOpt.map(userId => updateUser(userId, { avatar: fromNullable(response) })))
+  }
+
+  const onAvatarFileDrop = (result: Option<string>) => {
+    result
+      .map(result => {
+        const dialogId = openDialog(
+          t('Crop image'),
+          (
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <ImageCropper
+                src={result}
+                minCropBoxWidth={some(300)}
+                minCropBoxHeight={some(300)}
+                aspectRatio={1}
+                cropBoxMovable={true}
+                cropBoxResizable={false}
+                cropperWidth={300}
+                cropperHeight={300}
+                onCropResult={uploadCropResult}
+                closeDialog={() => closeDialog(dialogId)}
+              />
+            </div>
+          ),
+          [],
+        )
+      })
   }
 
   const userName = userNameOpt.getOrElse('Username is undefined');
@@ -112,89 +121,89 @@ const Profile: React.FunctionComponent<IProps> = ({
     return fromNullable(courses.filter(course => courseId.value === course.id.value)[0])
   }
 
-  return (
-    <Grid container={true} justify='center' style={{ padding: '15px 0 0 0' }}>
-      <Grid item={true} style={{ margin: '15px 0' }}>
-        <Paper style={{ padding: '15px' }}>
-          <Typography
-            variant='h6'
-            gutterBottom={true}
-            style={{
-              width: 200,
-              overflow: 'hidden',
-              textAlign: 'center',
-              textOverflow: 'ellipsis',
-            }}
+  const renderLeftPanel = () => {
+    return <Paper className={classes.leftPanelPaper}>
+      <Typography
+        variant='h6'
+        gutterBottom={true}
+        className={classes.userNameTypography}
+      >
+        {userName}
+      </Typography>
+      <DropzoneRenderer
+        accept='image/*'
+        onDropResult={onAvatarFileDrop}
+      >
+        <AvatarComponent
+          userAvatar={userAvatarOpt}
+          userName={userNameOpt}
+          size={'large'}
+          title={some(t('Upload photo'))}
+          onClick={() => { return }}
+        />
+      </DropzoneRenderer>
+    </Paper>
+  }
+
+  const renderRightPanel = () => {
+    return <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId='droppable'>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            style={{ ...getListStyle(snapshot.isDraggingOver) }}
           >
-            {userName}
-          </Typography>
-          <Dropzone
-            onDrop={onAvatarFileDrop}
-            accept='image/*'
-            style={{ border: 'none' }}
-          >
-            {(props) => <Tooltip title={t('Upload')} placement='bottom'>
-              <AvatarComponent
-                userAvatar={userAvatarOpt}
-                userName={userNameOpt}
-                size={'large'}
-                tooltipTitle={none}
-                onClick={() => { return }}
+            {userCourses.map((courseId, idx) =>
+              getCourseById(courseId).map(course =>
+                <Draggable key={course.id.value} draggableId={course.id.value} index={idx}>
+                  {(draggableProvided, draggableSnapshot) => (
+                    <div
+                      ref={draggableProvided.innerRef}
+                      {...draggableProvided.draggableProps}
+                      {...draggableProvided.dragHandleProps}
+                      style={getItemStyle(
+                        draggableSnapshot.isDragging,
+                        draggableProvided.draggableProps.style
+                      )}
+                    >
+                      <CourseCard
+                        key={course.id.value}
+                        course={course}
+                        currentUserIdOpt={userIdOpt}
+                        courseOwnerNameOpt={userNameOpt}
+                        courseOwnerAvatarOpt={userAvatarOpt}
+                        history={history}
+                        onCourseDelete={onCourseDelete}
+                        updateCourse={updateCourse}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              ).getOrElse(<div />)
+            )}
+            {userCourses.length === 0 &&
+              <PlaceholderCourseCard
+                userIdOpt={userIdOpt}
+                createCourse={createCourse}
               />
-            </Tooltip>}
-          </Dropzone>
-        </Paper>
-      </Grid>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='droppable'>
-          {(provided, snapshot) => (
-            <div 
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              <div style={{ margin: '15px 15px' }} >
-                {userCourses.map((courseId, idx) =>
-                    getCourseById(courseId).map(course =>
-                      <Draggable key={course.id.value} draggableId={course.id.value} index={idx}>
-                        {(draggableProvided, draggableSnapshot) => (
-                          <div
-                            ref={draggableProvided.innerRef}
-                            {...draggableProvided.draggableProps}
-                            {...draggableProvided.dragHandleProps}
-                            style={getItemStyle(
-                              draggableSnapshot.isDragging,
-                              draggableProvided.draggableProps.style
-                            )}
-                          >
-                            <CourseCard
-                              key={course.id.value}
-                              course={course}
-                              currentUserIdOpt={userIdOpt}
-                              courseOwnerNameOpt={userNameOpt}
-                              courseOwnerAvatarOpt={userAvatarOpt}
-                              history={history}
-                              onCourseDelete={onCourseDelete}
-                              updateCourse={updateCourse}
-                              uploadCourseFile={uploadCourseFile}
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    ).getOrElse(<></>)
-                )}
-                {userCourses.length === 0 &&
-                  <PlaceholderCourseCard
-                    userIdOpt={userIdOpt}
-                    createCourse={createCourse}
-                  />
-                }
-              </div>
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </Grid>
+            }
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
+  }
+
+  return (
+    <div className={classes.container}>
+      <div className={classes.leftPanelContainer}>
+        {renderLeftPanel()}
+      </div>
+      <div className={classes.rightPanelContainer}>
+        {renderRightPanel()}
+      </div>
+      {renderDialog()}
+    </div>
   );
 }
 
-export default Profile;
+export default withStyles(styles as any)(Profile);

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { fromNullable, Option } from 'fp-ts/lib/Option';
 import { Course, ME, Id } from '../api/entities';
 import { IApplicationState } from '../reducers';
 import CourseViewer from '../components/CourseViewer';

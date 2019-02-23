@@ -5,21 +5,21 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 
 import { Course, Id, User } from '../api/entities';
+
+import CourseCreateForm from '../forms/CourseCreateForm';
+
 import { useMaterialDialog } from '../hooks/useMaterialDialog';
 import { useI18n } from '../hooks/useI18n';
-import CourseCreateForm from '../forms/CourseCreateForm';
 
 interface IProps {
   history: any;
   userIdOpt: Option<Id<User>>;
   createCourse(course: Course): void;
-  uploadCourseFile(courseId: Id<Course>, file: ArrayBuffer): void;
 }
 
 const FabComponent = ({
   userIdOpt,
   createCourse,
-  uploadCourseFile,
 }: IProps) => {
 
   const { t } = useI18n();
@@ -33,7 +33,7 @@ const FabComponent = ({
           name: fromNullable(values.name),
           data: fromNullable(values.data),
           owner: userId,
-          picture: fromNullable(values.picture),
+          picture: values.picture,
           description: fromNullable(values.description),
           shortDescription: fromNullable(values.shortDescription),
           tags: fromNullable(values.tags),
@@ -54,6 +54,7 @@ const FabComponent = ({
           onSubmit={(values: any) => onCourseCreateFormSubmit(values, dialogId)}
           initialValues={{
             buttonLabel: t('Create'),
+            picture: none,
           }}
         />
       ),
@@ -63,7 +64,7 @@ const FabComponent = ({
 
   return (
     <>
-      <Fab style={{ position: 'absolute', right: 15, bottom: 15 }} color={'primary'} onClick={onCreateCourseClick}>
+      <Fab style={{ position: 'fixed', right: 15, bottom: 15 }} color={'primary'} onClick={onCreateCourseClick}>
         <AddIcon />
       </Fab>
       {renderDialog()}

@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
   card: {
     position: 'relative',
     margin: '0 0 15px 0',
-    width: 300,
+    width: 400,
     height: 300,
   },
   media: {

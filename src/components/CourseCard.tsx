@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { useState } from 'react';
 import classnames from 'classnames';
+import update from 'immutability-helper';
 import { fromNullable, none, Option } from 'fp-ts/lib/Option';
 
-import { withStyles, Theme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -27,15 +27,17 @@ import EditIcon from '@material-ui/icons/Edit';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 
 import { Course, ME, Id, User } from '../api/entities';
+
+import CourseCreateForm from '../forms/CourseCreateForm';
+import AvatarComponent from './AvatarComponent';
+
 import { useMaterialPopover } from '../hooks/useMaterialPopover';
 import { useI18n } from '../hooks/useI18n';
-import { styles } from '../styles/CourseCard';
 import { useMaterialDialog } from '../hooks/useMaterialDialog';
-import CourseCreateForm from '../forms/CourseCreateForm';
-import update from 'immutability-helper';
-import { Tooltip } from '@material-ui/core';
-import AvatarComponent from './AvatarComponent';
+
 import { generateFileLink } from '../utils/converters';
+
+import { styles } from './CourseCardStyles';
 
 interface IProps {
   course: ME<Course>;
@@ -46,7 +48,6 @@ interface IProps {
   history: any;
   onCourseDelete: (courseId: Id<Course>) => void;
   updateCourse: (courseId: Id<Course>, data: { [key: string]: any }) => void;
-  uploadCourseFile(courseId: Id<Course>, file: ArrayBuffer): void;
 }
 
 const CourseCard = ({
@@ -57,7 +58,6 @@ const CourseCard = ({
   classes,
   onCourseDelete,
   updateCourse,
-  uploadCourseFile,
   history,
 }: IProps) => {
 
@@ -91,7 +91,7 @@ const CourseCard = ({
           tags: fromNullable(values.tags),
           data: fromNullable(values.data),
           modifiedDate: fromNullable(new Date().getTime()),
-          picture: fromNullable(values.picture),
+          picture: values.picture,
         },
       }),
     )
@@ -113,6 +113,7 @@ const CourseCard = ({
             tags: course.entity.tags.getOrElse(''),
             data: course.entity.data.getOrElse(''),
             buttonLabel: t('Edit'),
+            picture: course.entity.picture,
           }}
         />
       ),
@@ -168,8 +169,7 @@ const CourseCard = ({
   const getUsersLikeIdx = () => {
     return currentUserIdOpt.map(currentUserId =>
       course.entity.likes.findIndex(el => el.value === currentUserId.value),
-    )
-      .getOrElse(-1)
+    ).getOrElse(-1)
   }
 
   const onStartClick = () => {
@@ -177,79 +177,75 @@ const CourseCard = ({
   }
 
   return (
-      <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <AvatarComponent
-              userAvatar={courseOwnerAvatarOpt}
-              userName={courseOwnerNameOpt}
-              size={'small'}
-              tooltipTitle={none}
-              onClick={() => { return }}
-            />
-          }
-          action={
-            <IconButton onClick={onMoreClick}>
-              <MoreVertIcon />
-            </IconButton>}
-          title={course.entity.name.getOrElse('Name is undefined')}
-          subheader={`${t('Created')} ${ceatedDate}`}
-        />
-        <CardMedia
-          className={classes.media}
-          image={
-            course.entity.picture
-              .map(v => generateFileLink(v))
-              .getOrElse('https://static.memrise.com/uploads/course_photos/3146044000171229114509.png')
-          }
-          title={course.entity.name.getOrElse('Name is undefined')}
-        />
+    <Card className={classes.card}>
+      <CardHeader
+        avatar={
+          <AvatarComponent
+            userAvatar={courseOwnerAvatarOpt}
+            userName={courseOwnerNameOpt}
+            size={'small'}
+            title={none}
+            onClick={() => { return }}
+          />
+        }
+        action={
+          <IconButton onClick={onMoreClick}>
+            <MoreVertIcon />
+          </IconButton>}
+        title={course.entity.name.getOrElse('Name is undefined')}
+        subheader={`${t('Created')} ${ceatedDate}`}
+      />
+      <CardMedia
+        className={classes.media}
+        image={course.entity.picture.map(v => generateFileLink(v)).getOrElse(require('../assets/defaultProfile.png'))}
+        title={course.entity.name.getOrElse('Name is undefined')}
+      />
+      <CardContent>
+        <Typography variant='subtitle1'>
+          {course.entity.shortDescription.getOrElse('Data is undefined')}
+        </Typography>
+      </CardContent>
+      <CardActions className={classes.actions} disableActionSpacing={true}>
+        <IconButton
+          aria-label='Like'
+          onClick={onLikeToogle}
+        >
+          <FavoriteIcon
+            color={getUsersLikeIdx() !== -1 ? 'secondary' : 'inherit'}
+          />
+        </IconButton>
+        <Tooltip title={t('Start')}>
+          <IconButton
+            aria-label='Start'
+            onClick={onStartClick}
+          >
+            <PlayCircleOutlineIcon />
+          </IconButton>
+        </Tooltip>
+        <IconButton
+          className={classnames(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={onExpandClick}
+          aria-expanded={expanded}
+          aria-label='Show more'
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={expanded} timeout='auto' unmountOnExit={true}>
         <CardContent>
-          <Typography variant='subtitle1'>
-            {course.entity.shortDescription.getOrElse('Data is undefined')}
+          <Typography paragraph={true}>
+            {course.entity.description.getOrElse('Data is undefined')}
+          </Typography>
+          <Typography variant='caption' paragraph={true}>
+            {`${t('Modified')} ${modifiedDate}`}
           </Typography>
         </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing={true}>
-          <IconButton
-            aria-label='Like'
-            onClick={onLikeToogle}
-          >
-            <FavoriteIcon
-              color={getUsersLikeIdx() !== -1 ? 'secondary' : 'inherit'}
-            />
-          </IconButton>
-          <Tooltip title={t('Start')}>
-            <IconButton
-              aria-label='Start'
-              onClick={onStartClick}
-            >
-              <PlayCircleOutlineIcon />
-            </IconButton>
-          </Tooltip>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={onExpandClick}
-            aria-expanded={expanded}
-            aria-label='Show more'
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout='auto' unmountOnExit={true}>
-          <CardContent>
-            <Typography paragraph={true}>
-              {course.entity.description.getOrElse('Data is undefined')}
-            </Typography>
-            <Typography variant='caption' paragraph={true}>
-              {`${t('Modified')} ${modifiedDate}`}
-            </Typography>
-          </CardContent>
-        </Collapse>
-        {renderPopover()}
-        {renderDialog()}
-      </Card>
+      </Collapse>
+      {renderPopover()}
+      {renderDialog()}
+    </Card>
   );
 }
 

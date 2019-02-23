@@ -10,8 +10,15 @@ import { setToken } from './actions/auth';
 import { loadToken } from './store/sessionStorage';
 import { initializeWebSocket } from './utils/websocket';
 import App from './App';
+import { grey } from '@material-ui/core/colors';
 
-const theme = createMuiTheme();
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: grey[800],
+    }
+  }
+});
 
 const store = configureStore({});
 

@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { fromNullable, Option } from 'fp-ts/lib/Option';
+import { Option } from 'fp-ts/lib/Option';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { Course, ME, User, Id } from '../api/entities';
 import Profile from '../components/Profile';
-import { IState as IAuthState } from '../reducers/auth';
 import { IApplicationState } from '../reducers';
 import { fetchCoursesByUserId, createCourse, deleteCourse, updateCourse, fetchCoursesByIds } from '../thunks/courses';
 import { getUserName, getUserAvatar, getUserCourses } from '../selectors/user';
@@ -14,7 +13,6 @@ import { getUserId } from '../selectors/auth';
 import { useEffect } from 'react';
 import { fetchUser, updateUser } from '../thunks/user';
 import Grid from '@material-ui/core/Grid';
-import { uploadCourseFile } from '../thunks/files';
 
 interface IStateProps {
   userIdOpt: Option<Id<User>>;
@@ -32,8 +30,7 @@ interface IDispatchProps {
   createCourse(course: Course): void;
   deleteCourse(userId: Id<User>, courseId: Id<Course>): void;
   updateCourse(courseId: Id<Course>, data: { [key: string]: any }): void;
-  updateUser(userId: Id<User>, data: {[key: string]: any}): void;
-  uploadCourseFile(courseId: Id<Course>, file: ArrayBuffer): void;
+  updateUser(userId: Id<User>, data: { [key: string]: any }): void;
 }
 
 interface IBoundProps {
@@ -50,14 +47,17 @@ const ProfileContainer: React.FunctionComponent<IProps> = (props: IProps) => {
 
   if (props.usersFetching) {
     return (
-      <Grid
-        container={true}
-        alignItems='center'
-        justify='center'
-        style={{ flex: 1 }}
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
       >
         <CircularProgress />
-      </Grid>
+      </div>
     )
   }
 
@@ -82,6 +82,5 @@ export default connect<IStateProps, IDispatchProps, IBoundProps, IApplicationSta
     deleteCourse,
     updateCourse,
     updateUser,
-    uploadCourseFile,
   }),
 )(ProfileContainer)

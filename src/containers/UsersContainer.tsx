@@ -33,14 +33,17 @@ const UsersContainer: React.FunctionComponent<IProps> = (props: IProps) => {
 
   if (props.usersFetching) {
     return (
-      <Grid
-        container={true}
-        alignItems='center'
-        justify='center'
-        style={{ flex: 1 }}
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
       >
         <CircularProgress />
-      </Grid>
+      </div>
     )
   }
 

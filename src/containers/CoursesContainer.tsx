@@ -1,21 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { fromNullable, Option } from 'fp-ts/lib/Option';
-
-import CircularProgress from '@material-ui/core/CircularProgress';
-
+import { Option } from 'fp-ts/lib/Option';
 import { Course, ME, User, Id, SearchQuery } from '../api/entities';
-import Profile from '../components/Profile';
-import { IState as IAuthState } from '../reducers/auth';
 import { IApplicationState } from '../reducers';
-import { fetchCoursesByUserId, createCourse, deleteCourse, updateCourse, fetchCourses } from '../thunks/courses';
-import { getUserName, getUserAvatar } from '../selectors/user';
+import { createCourse, deleteCourse, updateCourse, fetchCourses } from '../thunks/courses';
 import { getUserId } from '../selectors/auth';
 import { useEffect } from 'react';
 import { fetchUser } from '../thunks/user';
-import Grid from '@material-ui/core/Grid';
 import Courses from '../components/Courses';
-import { uploadCourseFile } from '../thunks/files';
 import { searchThunk } from '../thunks/search';
 
 interface IStateProps {
@@ -31,7 +23,6 @@ interface IDispatchProps {
   createCourse(course: Course): void;
   deleteCourse(userId: Id<User>, courseId: Id<Course>): void;
   updateCourse(courseId: Id<Course>, data: { [key: string]: any }): void;
-  uploadCourseFile(courseId: Id<Course>, file: ArrayBuffer): void;
   searchThunk(query: SearchQuery): void;
 }
 
@@ -64,7 +55,6 @@ export default connect<IStateProps, IDispatchProps, IBoundProps, IApplicationSta
     createCourse,
     deleteCourse,
     updateCourse,
-    uploadCourseFile,
     searchThunk,
   }),
 )(CoursesContainer)

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { none, Option, fromNullable } from 'fp-ts/lib/Option';
+import { none, Option, fromNullable, some } from 'fp-ts/lib/Option';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -14,18 +14,18 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import { useI18n } from '../hooks/useI18n';
+import { Id } from '../api/entities';
 
-import { useMaterialPopover } from '../hooks/useMaterialPopover';
-import { styles } from '../styles/AppHeader';
-import { useMaterialDialog } from '../hooks/useMaterialDialog';
 import Settings from './Settings';
 import AvatarComponent from './AvatarComponent';
 import LanguageSelector from './LanguageSelector';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import LinkButton from './LinkButton';
-import { User, ME, Id } from '../api/entities';
+
+import { useI18n } from '../hooks/useI18n';
+import { useMaterialPopover } from '../hooks/useMaterialPopover';
+import { useMaterialDialog } from '../hooks/useMaterialDialog';
+
+import { styles } from './AppHeaderStyles';
 
 interface IProps {
   history: any;
@@ -96,7 +96,7 @@ const AppHeader = ({
   }
 
   return (
-    <Grid container={true} className={classes.root}>
+    <div className={classes.root}>
       <CssBaseline />
       <AppBar position='static' className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
@@ -111,7 +111,7 @@ const AppHeader = ({
               userAvatar={userAvatarOpt}
               userName={userNameOpt}
               size={'small'}
-              tooltipTitle={fromNullable(t('Profile'))}
+              title={none}
               onClick={handleAvatarClick}
             />
             <div style={{ margin: '0 0 0 15px' }}><LanguageSelector /></div>
@@ -120,20 +120,20 @@ const AppHeader = ({
       </AppBar>
       <AppBar position='static' color='default'>
         <Toolbar variant='dense' style={{ justifyContent: 'center' }}>
-        <LinkButton color='primary' path='/profile' variant='text'>
-          {t('Profile')}
-        </LinkButton>
-        <LinkButton color='primary' path='/courses' variant='text'>
-          {t('Courses')}
-        </LinkButton>
-        <LinkButton color='primary' path='/users' variant='text'>
-          {t('Users')}
-        </LinkButton>
+          <LinkButton color='primary' path='/profile' variant='text'>
+            {t('Profile')}
+          </LinkButton>
+          <LinkButton color='primary' path='/courses' variant='text'>
+            {t('Courses')}
+          </LinkButton>
+          <LinkButton color='primary' path='/users' variant='text'>
+            {t('Users')}
+          </LinkButton>
         </Toolbar>
       </AppBar>
       {renderPopover()}
       {renderDialog()}
-    </Grid>
+    </div>
   );
 
 }
