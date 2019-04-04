@@ -1,0 +1,33 @@
+.Profile__userNameTypography {
+  width: 200px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.Profile__leftPanelPaper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+.Profile__container {
+  display: flex;
+  margin: 0px auto 0px auto;
+  padding: 15px 0 0 0;
+}
+
+.Profile__leftPanelContainer {
+  width: 250px;
+}
+
+.Profile__rightPanelContainer {
+  width: 400px; 
+  margin: 0px 10px;
+}
+
+.Profile__image-cropper-container {
+  display: flex;
+  justify-content: center;
+}

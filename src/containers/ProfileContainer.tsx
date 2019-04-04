@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Option } from 'fp-ts/lib/Option';
+import { History } from 'history';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -8,11 +9,12 @@ import { Course, ME, User, Id } from '../api/entities';
 import Profile from '../components/Profile';
 import { IApplicationState } from '../reducers';
 import { fetchCoursesByUserId, createCourse, deleteCourse, updateCourse, fetchCoursesByIds } from '../thunks/courses';
-import { getUserName, getUserAvatar, getUserCourses } from '../selectors/user';
+import { getUserName, getUserAvatar, getUserCoursesIds, getUsersFetching } from '../selectors/user';
 import { getUserId } from '../selectors/auth';
 import { useEffect } from 'react';
 import { fetchUser, updateUser } from '../thunks/user';
-import Grid from '@material-ui/core/Grid';
+import { getRouterLocation } from '../selectors/router';
+import { getCoursesData } from '../selectors/course';
 
 interface IStateProps {
   userIdOpt: Option<Id<User>>;
@@ -30,16 +32,16 @@ interface IDispatchProps {
   createCourse(course: Course): void;
   deleteCourse(userId: Id<User>, courseId: Id<Course>): void;
   updateCourse(courseId: Id<Course>, data: { [key: string]: any }): void;
-  updateUser(userId: Id<User>, data: { [key: string]: any }): void;
+  updateUser(data: { [key: string]: any }): void;
 }
 
 interface IBoundProps {
-  history: any;
+  history: History;
 }
 
 type IProps = IStateProps & IDispatchProps & IBoundProps;
 
-const ProfileContainer: React.FunctionComponent<IProps> = (props: IProps) => {
+const ProfileContainer: React.FunctionComponent<IProps> = (props) => {
 
   useEffect(() => {
     props.userIdOpt.map(userId => props.fetchUser(userId));
@@ -66,13 +68,13 @@ const ProfileContainer: React.FunctionComponent<IProps> = (props: IProps) => {
 
 export default connect<IStateProps, IDispatchProps, IBoundProps, IApplicationState>(
   (state) => ({
-    location: state.router.location,
-    courses: state.courses.data,
-    userCourses: getUserCourses(state),
+    location: getRouterLocation(state),
+    courses: getCoursesData(state),
+    userCourses: getUserCoursesIds(state),
     userNameOpt: getUserName(state),
     userAvatarOpt: getUserAvatar(state),
     userIdOpt: getUserId(state),
-    usersFetching: state.users.fetching,
+    usersFetching: getUsersFetching(state),
   }),
   ({
     fetchUser,

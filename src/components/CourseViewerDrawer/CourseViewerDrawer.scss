@@ -1,0 +1,26 @@
+.CourseViewerDrawer__drawer {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.CourseViewerDrawer__drawer-container {
+  flex: 1;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.CourseViewerDrawer__drawer-settings {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.CourseViewerDrawer__drawer-close-button {
+  display: flex;
+  align-items: center;
+}
+
+.CourseViewerDrawer__text-field {
+  margin: 15px 15px 0px 0px !important;
+
+}

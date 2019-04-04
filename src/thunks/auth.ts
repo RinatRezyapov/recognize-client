@@ -1,8 +1,9 @@
 import { Dispatch } from 'redux';
-import { fromNullable } from 'fp-ts/lib/Option';
+import { fromNullable, Some } from 'fp-ts/lib/Option';
 import { to } from 'await-to-js';
 import { signIn, signInError, signOut } from '../actions/auth';
 import config from '../config/config';
+import { changeSnackbarVisibility } from '../actions/ui';
 
 export const userSignIn = (login: string, password: string) =>
     async (dispatch: Dispatch) => {
@@ -19,8 +20,12 @@ export const userSignIn = (login: string, password: string) =>
         }))
         fromNullable(optionalResult)
             .map(async result => {
-                const resultJSON = await result.json();
-                dispatch(signIn(resultJSON.token));
+                if (result.status === 200) {
+                  const resultJSON = await result.json();
+                  dispatch(signIn(resultJSON.token));
+                } else {
+                  dispatch(changeSnackbarVisibility({visible: true, message: new Some('Authorization is unsuccesful')}));
+                }
             })
         fromNullable(optionalError)
             .map(error => dispatch(signInError(error)))

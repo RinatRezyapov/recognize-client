@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { reduxForm, InjectedFormProps, Field } from 'redux-form';
+import {
+  reduxForm,
+  InjectedFormProps,
+  Field
+} from 'redux-form';
 
 import Button from '@material-ui/core/Button/Button';
 import TextField from '@material-ui/core/TextField/TextField';
@@ -7,12 +11,6 @@ import TextField from '@material-ui/core/TextField/TextField';
 import { useI18n } from '../hooks/useI18n';
 
 interface IProps {
-  submitting: boolean;
-  pristine: boolean;
-  reset: any;
-  fields: any;
-  initialValues: any;
-  onSubmit: (values: any) => any;
   handleSubmit: () => void;
 }
 
@@ -27,9 +25,9 @@ const renderTextField = (props: any) => (
   />
 )
 
-const SettingsForm = ({
+const SettingsForm: React.FunctionComponent<IProps & InjectedFormProps<IProps>> = ({
   handleSubmit,
-}: IProps & InjectedFormProps<IProps>) => {
+}) => {
 
   const { t } = useI18n();
 
@@ -48,12 +46,12 @@ const SettingsForm = ({
         fullWidth={true}
       />
       <div style={{ marginTop: 15 }}>
-          <Button
-            color='primary'
-            variant='outlined'
-          >
-            {t('Save')}
-          </Button>
+        <Button
+          color='primary'
+          variant='outlined'
+        >
+          {t('Save')}
+        </Button>
       </div>
     </form>
   )

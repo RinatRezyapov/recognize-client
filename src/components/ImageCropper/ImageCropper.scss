@@ -1,0 +1,10 @@
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
+
+.ImageCropper__root-container {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}

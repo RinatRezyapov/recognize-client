@@ -1,0 +1,27 @@
+.CourseViewer__container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.CourseViewer__clear-iconbutton {
+  position: fixed; 
+  top: 5px; 
+  right: 5px;
+}
+
+.CourseViewer__clear-icon {
+  color: white;
+}
+
+.CourseViewer__expand-iconbutton {
+  position: fixed; 
+  top: 50%; 
+  right: 5px;
+}
+
+.CourseViewer__expand-icon {
+  color: white;
+}

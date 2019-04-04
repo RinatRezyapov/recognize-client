@@ -1,23 +1,20 @@
 import * as React from 'react';
 import { reduxForm, InjectedFormProps, Field } from 'redux-form';
-import { Link } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button/Button';
 import TextField from '@material-ui/core/TextField/TextField';
-import withDialogProps, { IWithDialogProps } from '../decorators/withDialogProps';
-import { useI18n } from '../hooks/useI18n';
+
 import LinkButton from '../components/LinkButton';
+import withDialogProps, { IWithDialogProps } from '../decorators/withDialogProps';
+
+import { useI18n } from '../hooks/useI18n';
 
 interface IBoundProps {
   onSubmit: (values: any) => any;
 }
 
 interface IProps extends IBoundProps {
-  submitting: boolean;
-  pristine: boolean;
-  reset: any;
-  handleSubmit: any;
-  fields: any;
+
 }
 
 const renderTextField = (props: any) => (
@@ -31,7 +28,7 @@ const renderTextField = (props: any) => (
   />
 )
 
-const SignInForm = (props: IProps & InjectedFormProps<IProps> & IWithDialogProps) => {
+const SignInForm: React.FunctionComponent<IProps & InjectedFormProps<IProps> & IWithDialogProps> = (props) => {
 
   const { t } = useI18n();
 

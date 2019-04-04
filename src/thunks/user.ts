@@ -40,51 +40,21 @@ export const fetchUsersById = (userIds: Array<Id<User>>) => async (dispatch: Dis
       .map(error => dispatch(usersError({ error })))
   }
 
-export const updateUser = (userId: Id<User>, data: {[key: string]: any}) =>
+export const updateUser = (data: {[key: string]: any}) =>
   async (dispatch: Dispatch, getState: () => IApplicationState) => {
     const state = getState();
-    getUserOpt(state)
-      .map(async user => {
-        const result = update(user, {
-          entity: {
-            $merge: data,
-          },
-        })
-        dispatch(usersResolved({ result: [result] }))
-        const [optionalError] = await to(ws.send<ME<User>>(new ProtocolUser.Update(result)));
-        fromNullable(optionalError)
-          .map(error => dispatch(usersError({ error })))
+    getUserOpt(state).map(async user => {
+      const previousUser = user;
+      const newUser = update(user, {
+        entity: {
+          $merge: data,
+        }
+      });
+      dispatch(usersResolved({ result: [newUser] }));
+      const [optionalError] = await to(ws.send<ME<User>>(new ProtocolUser.Update(newUser)));
+      fromNullable(optionalError).map(error => {
+        dispatch(usersResolved({ result: [previousUser] }))
+        dispatch(usersError({ error }));
       })
+    })
   }
-
-/*export const createUser = (user: User) =>
-  async (dispatch: Dispatch, getState: () => IApplicationState) => {
-    const state = getState();
-    const [optionalError, optionalResult] = await to(ws.send<ME<User>>(new ProtocolUsers.Create(user)));
-    fromNullable(optionalResult)
-      .map(resultUser => {
-        const UserData = fromNullable(state.user.data[userId.value])
-          .getOrElse([])
-        const result = update(UserData, {
-          $push: [resultUser],
-        })
-        dispatch(userResolved({ userId, result }))
-      })
-    fromNullable(optionalError)
-      .map(error => dispatch(userError({ userId, error })))
-  }*/
-
-/*export const deleteUser = (userId: Id<User>, courseId: Id<User>) =>
-  async (dispatch: Dispatch, getState: () => IApplicationState) => {
-    const state = getState();
-    const [optionalError, optionalResult] = await to(ws.send<Id<User>>(new ProtocolUsers.Delete(courseId)));
-    fromNullable(optionalResult)
-      .map(resutUserId => {
-        const result = fromNullable(state.user.data[userId.value])
-          .getOrElse([])
-          .filter(user => user.id.value !== resutUserId.value)
-        dispatch(userResolved({ userId, result }));
-      })
-    fromNullable(optionalError)
-      .map(error => dispatch(userError({ userId, error })))
-  }*/

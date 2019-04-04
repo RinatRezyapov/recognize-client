@@ -1,40 +1,43 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { History } from 'history';
+import { Option } from 'fp-ts/lib/Option';
+
 import { Course, ME, Id } from '../api/entities';
-import { IApplicationState } from '../reducers';
+import { changeAppHeaderVisibility, changeFabButtonVisibility } from '../actions/ui';
 import CourseViewer from '../components/CourseViewer';
-import { hideAppHeader, hideFabButton } from '../actions/ui';
+import { IApplicationState } from '../reducers';
+import { getRouterLocation } from '../selectors/router';
+import { getCourse } from '../selectors/course';
 import { fetchCourse } from '../thunks/courses';
 
 interface IStateProps {
-  userCourses: Array<ME<Course>>;
+  course: Option<ME<Course>>;
 }
 
 interface IDispatchProps {
-  hideAppHeader: () => void;
-  hideFabButton: () => void;
+  changeAppHeaderVisibility: (visible: boolean) => void;
+  changeFabButtonVisibility: (visible: boolean) => void;
   fetchCourse: (courseId: Id<Course>) => void;
 }
 
 interface IBoundProps {
-  history: any;
+  history: History;
   match: any;
 }
 
 type IProps = IStateProps & IDispatchProps & IBoundProps;
 
-const CourseViewerContainer: React.FunctionComponent<IProps> = (props: IProps) => <CourseViewer {...props} />;
+const CourseViewerContainer: React.FunctionComponent<IProps> = (props) => <CourseViewer {...props} />;
 
 export default connect<IStateProps, IDispatchProps, IBoundProps, IApplicationState>(
   (state) => ({
-    location: state.router.location,
-    userCourses: state.auth.userId
-      .map(userId => state.courses.data.filter(v => v.entity.owner.value === userId.value))
-      .getOrElse([]),
+    location: getRouterLocation(state),
+    course: getCourse(state),
   }),
   ({
-    hideAppHeader,
-    hideFabButton,
+    changeAppHeaderVisibility,
+    changeFabButtonVisibility,
     fetchCourse,
   }),
 )(CourseViewerContainer)

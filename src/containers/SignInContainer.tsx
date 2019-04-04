@@ -7,25 +7,31 @@ import SignIn from '../components/SignIn';
 import { userSignIn } from '../thunks/auth';
 
 import { IApplicationState } from '../reducers';
-import { IState as AuthState } from '../reducers/auth';
+import { getRouterLocation } from '../selectors/router';
+import { getToken } from '../selectors/auth';
+import { Option } from 'fp-ts/lib/Option';
 
-interface IProps {
-  location: string;
-  dispatch: Dispatch;
-  auth: AuthState;
+interface IStateProps {
+  token: Option<string>;
+}
+
+interface IDispatchProps {
   userSignIn: (login: string, password: string) => void;
 }
 
-const SignInContainer = (props: IProps) => <SignIn {...props} />;
+interface IBoundProps {
+  history: History;
+}
 
-const mapStateToProps = (state: IApplicationState) => ({
-  location: state.router.location,
-  auth: state.auth,
-})
+type IProps = IStateProps & IDispatchProps & IBoundProps;
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatch,
-  userSignIn,
-})
+const SignInContainer: React.FunctionComponent<IProps> = (props) => <SignIn {...props} />;
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer)
+export default connect<IStateProps, IDispatchProps, IBoundProps, IApplicationState>(
+  (state) => ({
+    token: getToken(state),
+  }),
+  ({
+    userSignIn,
+  }),
+)(SignInContainer)

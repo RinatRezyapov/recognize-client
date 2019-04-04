@@ -1,37 +1,45 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { isSome } from 'fp-ts/lib/Option';
+import { isSome, Option } from 'fp-ts/lib/Option';
+import { History } from 'history';
 
-import { IState as IAuthState } from '../reducers/auth';
+import { changeAppHeaderVisibility, changeFabButtonVisibility } from '../actions/ui';
 import { IApplicationState } from '../reducers';
-import Grid from '@material-ui/core/Grid';
+import { getToken } from '../selectors/auth';
 
 interface IStateProps {
-  auth: IAuthState;
+  token: Option<string>;
 }
 
 interface IDispatchProps {
-
+  changeAppHeaderVisibility(visible: boolean): void;
+  changeFabButtonVisibility(visible: boolean): void;
 }
 
 interface IBoundProps {
   component: any,
   path: string,
-  history: any;
+  history: History;
 }
 
 type IProps = IStateProps & IDispatchProps & IBoundProps
 
-const PrivateRoute: React.FunctionComponent<IProps> = ({ component, history, ...rest }: IProps) => {
+const PrivateRoute: React.FunctionComponent<IProps> = ({
+  component,
+  history,
+  ...rest
+}) => {
+
   const Component = component;
 
   return (
     <Route
       {...rest}
       render={props =>
-        isSome(rest.auth.token) ? (
-            <Component {...props} />
+        isSome(rest.token) ? (
+          <Component {...props} />
         ) : (
             <Redirect
               to={{
@@ -47,6 +55,10 @@ const PrivateRoute: React.FunctionComponent<IProps> = ({ component, history, ...
 
 export default connect<IStateProps, IDispatchProps, IBoundProps, IApplicationState>(
   (state) => ({
-    auth: state.auth,
-  })
+    token: getToken(state),
+  }),
+  ({
+    changeAppHeaderVisibility,
+    changeFabButtonVisibility,
+  }),
 )(PrivateRoute)

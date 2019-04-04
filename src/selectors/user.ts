@@ -1,33 +1,26 @@
-import { IApplicationState } from '../reducers';
-import { fromNullable, Option } from 'fp-ts/lib/Option';
+import { Option } from 'fp-ts/lib/Option';
+
 import { ME, User } from '../api/entities';
+import { getUserId } from './auth';
+import { IApplicationState } from '../reducers';
+import { headOption } from '../utils/fp-ts';
+
+export const getUsersData = (state: IApplicationState) => state.users.data;
+
+export const getUsersFetching = (state: IApplicationState) => state.users.fetching;
 
 export const getUserOpt = (state: IApplicationState): Option<ME<User>> => {
-  const userIdOpt = state.auth.userId;
+  return getUserId(state).chain(userId =>
+    headOption(getUsersData(state).filter(user => user.id.value === userId.value))
+  );
+};
 
-  return userIdOpt.chain(userId => fromNullable(state.users.data.filter(user => user.id.value === userId.value)[0]));
-}
+export const getUserName = (state: IApplicationState) => getUserOpt(state).map(user => user.entity.name);
 
-export const getUserName = (state: IApplicationState) => {
-  const userOpt = getUserOpt(state);
+export const getUserAvatar = (state: IApplicationState) => getUserOpt(state).chain(v => v.entity.avatar);
 
-  return userOpt.map(user => user.entity.name);
-}
+export const getUserEmail = (state: IApplicationState) => getUserOpt(state).map(v => v.entity.email);
 
-export const getUserAvatar = (state: IApplicationState) => {
-  const userOpt = getUserOpt(state);
-
-  return userOpt.chain(v => v.entity.avatar);
-}
-
-export const getUserEmail = (state: IApplicationState) => {
-  const userOpt = getUserOpt(state);
-
-  return userOpt.map(v => v.entity.email);
-}
-
-export const getUserCourses = (state: IApplicationState) => {
-  const userOpt = getUserOpt(state);
-
-  return userOpt.map(user => user.entity.courses).getOrElse([]);
-}
+export const getUserCoursesIds = (state: IApplicationState) => getUserOpt(state).map(user =>
+  user.entity.courses
+).getOrElse([]);

@@ -1,0 +1,25 @@
+.Courses__root {
+  display: flex;
+  margin: 0px auto 0px auto; 
+  padding: 15px 0 0 0;
+}
+
+.Courses__search-panel-container {
+  width: 250px;
+}
+
+.Courses__search-panel-paper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+.Courses__search-button {
+  margin-right: 10px !important;
+}
+
+.Courses__search-result-panel {
+  width: 400px;
+  margin: 0px 10px;
+}

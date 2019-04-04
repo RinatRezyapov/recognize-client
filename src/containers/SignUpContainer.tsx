@@ -1,31 +1,34 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Option } from 'fp-ts/lib/Option';
 
 import SignUp from '../components/SignUp';
 
 import { IApplicationState } from '../reducers';
-import { IState as AuthState } from '../reducers/auth';
-
+import { getToken } from '../selectors/auth';
 import { userSignUp } from '../thunks/auth';
 
-interface IProps {
-  location: string;
-  dispatch: any;
-  auth: AuthState;
+interface IStateProps {
+  token: Option<string>;
+}
+
+interface IDispatchProps {
   userSignUp: (login: string, password: string, name: string) => void;
 }
 
-const SignUpContainer = (props: IProps) => <SignUp {...props} />;
+interface IBoundProps {
+  history: History;
+}
 
-const mapStateToProps = (state: IApplicationState) => ({
-  location: state.router.location,
-  auth: state.auth,
-})
+type IProps = IStateProps & IDispatchProps & IBoundProps;
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatch,
-  userSignUp,
-})
+const SignUpContainer: React.FunctionComponent<IProps> = (props) => <SignUp {...props} />;
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpContainer)
+export default connect<IStateProps, IDispatchProps, IBoundProps, IApplicationState>(
+  (state) => ({
+    token: getToken(state),
+  }),
+  ({
+    userSignUp,
+  }),
+)(SignUpContainer)

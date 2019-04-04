@@ -76,8 +76,10 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, "www"),
+    chunkFilename: '[name]-[hash].bundle.js',
     filename: process.env.NODE_ENV === 'production' ? '[name]-app-[hash].js' : '[name]-app.js',
-    library: "www"
+    library: "www",
+    publicPath: '/'
   },
 
   module: {

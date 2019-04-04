@@ -15,4 +15,4 @@ const {
 } = styledComponents as ThemedStyledComponentsModule<IThemeInterface>;
 
 export { css, createGlobalStyle, keyframes, ThemeProvider };
-export default styled
+export default styled;
