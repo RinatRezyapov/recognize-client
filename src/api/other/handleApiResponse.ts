@@ -1,3 +1,4 @@
+import { none } from 'fp-ts/lib/Option';
 import { fromJSON } from './JSON';
 
 const handleError = (error: any) => {
@@ -7,10 +8,8 @@ const handleError = (error: any) => {
 const handleResult = (result: any) => {
   switch (result.tpe.value) {
     case 'ServerResponse.ObjectsListResolved':
-
       return result.data.map((data: any) => fromJSON(data));
     case 'ServerResponse.ObjectResolved':
-
       return fromJSON(result.data);
     default:
 

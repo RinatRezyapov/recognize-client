@@ -6,11 +6,11 @@ export default (props: any) => {
         <SvgIcon viewBox='0 0 640 480' {...props}>
             <defs>
               <clipPath id='a'>
-                <path fill-opacity='.67' d='M-85.333 0h682.67v512h-682.67z' />
+                <path fillOpacity='.67' d='M-85.333 0h682.67v512h-682.67z' />
               </clipPath>
             </defs>
-            <g clip-path='url(#a)' transform='translate(80) scale(.94)'>
-              <g stroke-width='1pt'>
+            <g clipPath='url(#a)' transform='translate(80) scale(.94)'>
+              <g strokeWidth='1pt'>
                 <path fill='#006' d='M-256 0H768.02v512.01H-256z' />
                 <path
                     d='M-256 0v57.244l909.535 454.768H768.02V454.77L-141.515 0H-256zM768.02

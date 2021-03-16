@@ -44,7 +44,7 @@
     "i18next-browser-languagedetector": "^2.2.3",
     "immutability-helper": "^2.8.1",
     "lodash-es": "^4.17.11",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.1",
     "react": "^16.8.5",
     "react-beautiful-dnd": "^10.0.4",
     "react-cropper": "^1.2.0",

@@ -10,7 +10,7 @@ import './LinkButton.scss';
 interface IProps {
   path: string;
   children: React.ReactNode;
-  color: PropTypes.Color;
+  color?: PropTypes.Color;
   variant: 'text' | 'flat' | 'outlined' | 'contained' | 'raised' | 'fab' | 'extendedFab';
 }
 
@@ -28,6 +28,7 @@ const LinkButton: React.FunctionComponent<IProps> = ({
     >
       <Button
         color={color}
+        style={{ color: 'white' }}
         variant={variant}
       >
         {children}

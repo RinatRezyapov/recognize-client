@@ -5,6 +5,7 @@ import typeConstructors from './typeConstructors';
 import { fromNullable } from 'fp-ts/lib/Option';
 
 export const fromJSON = <T>(data: any): any => {
+  if (!data) return fromNullable(data)
   if (data._tag) {
     return fromNullable(data.value)
   }

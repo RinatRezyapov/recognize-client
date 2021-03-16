@@ -110,14 +110,14 @@ const Courses: React.FunctionComponent<IProps> = ({
           <Button
             className='Courses__search-button'
             onClick={onCourseSearch}
-            variant='raised'
+            variant='outlined'
             color='primary'
           >
             {t('Search')}
           </Button>
           <Button
             onClick={onCourseSearchClear}
-            variant='raised'
+            variant='outlined'
             color='secondary'
           >
             {t('Clear')}
