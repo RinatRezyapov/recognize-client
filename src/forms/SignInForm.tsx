@@ -35,7 +35,7 @@ const SignInForm: React.FunctionComponent<IProps & InjectedFormProps<IProps> & I
   const { handleSubmit } = props;
 
   return (
-    <form onSubmit={handleSubmit} style={{ padding: '15px 30px 30px 30px' }}>
+    <form onSubmit={handleSubmit}>
       <Field
         name='login'
         component={renderTextField}
@@ -60,7 +60,7 @@ const SignInForm: React.FunctionComponent<IProps & InjectedFormProps<IProps> & I
           {t('SignIn')}
         </Button>
         <LinkButton
-          path='/signup'
+          to='/signup'
           color='secondary'
           variant='outlined'
         >

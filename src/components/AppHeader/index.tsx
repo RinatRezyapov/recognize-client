@@ -26,6 +26,7 @@ import { useMaterialPopover } from "../../hooks/useMaterialPopover";
 import { useMaterialDialog } from "../../hooks/useMaterialDialog";
 
 import "./AppHeader.scss";
+import styled from "@emotion/styled";
 
 interface IProps {
   history: History;
@@ -102,21 +103,21 @@ const AppHeader: React.FunctionComponent<IProps> = ({
     <AppBar position="static" className="AppHeader__main-app-bar">
       <Toolbar className="AppHeader__tool-bar">
         <div className="AppHeader__left-tool-bar-group">
-          <Typography variant="h6" color="inherit">
+          <RecognizeLogo variant="h6" color="inherit">
             Recognize
-          </Typography>
+          </RecognizeLogo>
         </div>
-        <div>
-          <LinkButton path="/profile" variant="text">
+        <MenuItemsContainer>
+          <LinkButton to="/profile" variant="text" type='light'>
             {t("Profile")}
           </LinkButton>
-          <LinkButton path="/courses" variant="text">
+          <LinkButton to="/courses" variant="text" type='light'>
             {t("Courses")}
           </LinkButton>
-          <LinkButton path="/users" variant="text">
+          <LinkButton to="/users" variant="text" type='light'>
             {t("Users")}
           </LinkButton>
-        </div>
+        </MenuItemsContainer>
         <div className="AppHeader__right-tool-bar-group">
           <AvatarComponent
             userAvatar={userAvatarOpt}
@@ -136,13 +137,13 @@ const AppHeader: React.FunctionComponent<IProps> = ({
   const renderSecondAppBar = () => (
     <AppBar position="static" color="default">
       <Toolbar variant="dense" className="AppHeader__second-tool-bar">
-        <LinkButton color="primary" path="/profile" variant="text">
+        <LinkButton color="primary" to="/profile" variant="text">
           {t("Profile")}
         </LinkButton>
-        <LinkButton color="primary" path="/courses" variant="text">
+        <LinkButton color="primary" to="/courses" variant="text">
           {t("Courses")}
         </LinkButton>
-        <LinkButton color="primary" path="/users" variant="text">
+        <LinkButton color="primary" to="/users" variant="text">
           {t("Users")}
         </LinkButton>
       </Toolbar>
@@ -160,3 +161,14 @@ const AppHeader: React.FunctionComponent<IProps> = ({
 };
 
 export default AppHeader;
+
+const RecognizeLogo = styled(Typography)`
+  color: white;
+  font-weight: 600;
+`;
+
+const MenuItemsContainer = styled.div`
+  a:not(:last-child) {
+    margin-right: 1rem;
+  }
+`;

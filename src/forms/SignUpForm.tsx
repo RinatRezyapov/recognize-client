@@ -8,7 +8,6 @@ import {
 import Button from '@material-ui/core/Button/Button';
 import TextField from '@material-ui/core/TextField/TextField';
 
-import LinkButton from '../components/LinkButton';
 import withDialogProps, { IWithDialogProps } from '../decorators/withDialogProps';
 
 import { useI18n } from '../hooks/useI18n';
@@ -107,13 +106,6 @@ const SignUpForm: React.FunctionComponent<IProps & InjectedFormProps<IProps> & I
         >
           {t('SignUp')}
         </Button>
-        <LinkButton
-          path='/'
-          color='secondary'
-          variant='outlined'
-        >
-          {t('SignIn')}
-        </LinkButton>
       </div>
     </form>
   )

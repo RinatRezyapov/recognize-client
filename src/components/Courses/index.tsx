@@ -103,7 +103,7 @@ const Courses: React.FunctionComponent<IProps> = ({
           onChange={searchValueChangeHandler}
         />
         <FormControlLabel
-          control={<Checkbox checked={exactsearch} onChange={onExactsearchChange} />}
+          control={<Checkbox size='small' checked={exactsearch} onChange={onExactsearchChange} />}
           label={t('Exact search')}
         />
         <div>

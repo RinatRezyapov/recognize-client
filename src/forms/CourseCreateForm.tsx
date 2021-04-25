@@ -186,7 +186,6 @@ const CourseCreateForm: React.FunctionComponent<IProps & InjectedFormProps<IProp
         onChange={onTabChange}
         indicatorColor='primary'
         textColor='primary'
-        fullWidth={true}
       >
         <Tab value={TAB_GENERAL} label={t('General')} />
         <Tab value={TAB_CONTENT} label={t('Content')} />

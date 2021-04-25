@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { History } from 'history';
-import { ConnectedRouter } from 'connected-react-router';
-import { Switch } from 'react-router-dom';
-import RootContainer from './containers/RootContainer';
+import * as React from "react";
+import { History } from "history";
+import { ConnectedRouter } from "connected-react-router";
+import { Switch } from "react-router-dom";
+import RootContainer from "./containers/RootContainer";
 
 interface IProps {
   history: History;
@@ -20,4 +20,4 @@ const App: React.FunctionComponent<IProps> = ({
   )
 }
 
-export default App
+export default App;

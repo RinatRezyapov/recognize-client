@@ -79,7 +79,7 @@ const PlaceholderCourseCard: React.FunctionComponent<IProps> = ({
           {t('Get started by picking a course')}
         </Typography>
         <LinkButton
-          path='/courses'
+          to='/courses'
           color='primary'
           variant='outlined'
         >

@@ -215,7 +215,7 @@ const CourseCard: React.FunctionComponent<IProps & WithStyles> = ({
   )
 
   const renderCardActions = () => (
-    <CardActions className='CourseCard__actions' disableActionSpacing={true}>
+    <CardActions className='CourseCard__actions'>
       <IconButton
         aria-label='Like'
         onClick={onLikeToogle}

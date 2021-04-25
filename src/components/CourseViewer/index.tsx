@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { isNone, Option } from 'fp-ts/lib/Option';
-import styled from 'styled-components';
 import { History } from 'history';
+import styled from '@emotion/styled'
 
 import TextField from '@material-ui/core/TextField';
 import { green, red, teal } from '@material-ui/core/colors';
@@ -80,7 +80,7 @@ const CourseViewer: React.FunctionComponent<IProps> = ({
   const [userInput, setUserInput] = useState('');
   const [intervalMs, setIntervalMs] = useState(1000);
   const [wordsCount, setWordsCount] = useState(2);
-  const [background, setBackground] = useState(teal[100]);
+  const [background, setBackground] = useState<string>(teal[100]);
   const [phraseVisibility, setPhraseVisibility] = useState(true);
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);

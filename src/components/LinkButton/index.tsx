@@ -1,40 +1,45 @@
-
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-
-import Button from '@material-ui/core/Button';
-import { PropTypes } from '@material-ui/core';
-
-import './LinkButton.scss';
-
+import styled from "@emotion/styled";
+import { PropTypes } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import * as React from "react";
+import { Link } from "react-router-dom";
 interface IProps {
-  path: string;
+  to: string;
   children: React.ReactNode;
   color?: PropTypes.Color;
-  variant: 'text' | 'flat' | 'outlined' | 'contained' | 'raised' | 'fab' | 'extendedFab';
+  type?: "light" | "dark";
+  variant: any; // TODO
 }
 
 const LinkButton: React.FunctionComponent<IProps> = ({
-  path,
+  to,
   children,
   color,
+  type = "dark",
   variant,
 }) => {
+  const RenderedButton = type === "light" ? LightButton : Button;
 
   return (
-    <Link
-      className='LinkButton__link'
-      to={path}
-    >
-      <Button
-        color={color}
-        style={{ color: 'white' }}
-        variant={variant}
-      >
+    <StyledLink to={to}>
+      <RenderedButton color={color} variant={variant}>
         {children}
-      </Button>
-    </Link>
-  )
-}
+      </RenderedButton>
+    </StyledLink>
+  );
+};
 
-export default LinkButton
+export default LinkButton;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const LightButton = styled(Button)`
+  border-color: rgb(255, 255, 255, 0.3);
+  color: rgb(255, 255, 255, 0.7);
+  &:hover {
+    border-color: rgb(255, 255, 255, 1);
+    color: rgb(255, 255, 255, 1);
+  }
+`;

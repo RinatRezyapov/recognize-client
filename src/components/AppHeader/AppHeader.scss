@@ -2,7 +2,11 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  .MuiPaper-root {
+    background: rgba(0, 0, 0, 0.25);
+  }
 }
+
 .AppHeader__main-app-bar {
   align-items: center;
 }

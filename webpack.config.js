@@ -4,7 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const dotenv = require('dotenv').config( {
+  path: path.join(__dirname, '.env')
+} );
+console.log(dotenv.parsed)
 const plugins = [
   new HtmlWebpackPlugin({
     template: 'index.html',
@@ -15,7 +18,10 @@ const plugins = [
       collapseWhitespace: true
     }
   }),
-  new webpack.HotModuleReplacementPlugin()
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.DefinePlugin( {
+    "process.env": {}
+  } ),
 ];
 
 if (process.env.NODE_ENV === 'production') {
@@ -61,7 +67,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   cache: true,
 
-  devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'cheap-module-eval-source-map',
+  devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'eval-cheap-module-source-map',
   devServer: {
     hot: true,
     contentBase: './src',
@@ -101,5 +107,5 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
-  plugins
+  plugins,
 };

@@ -9,6 +9,7 @@ i18next.init({
     en: {
       translations: {
         'SignIn': 'SignIn',
+        'Back': 'Back',
         'Change language': 'Change language',
         'Login': 'Login',
         'Password': 'Password',
@@ -19,6 +20,7 @@ i18next.init({
     ru: {
       translations: {
         'SignIn': 'Войти',
+        'Back': 'Назад',
         'Change language': 'Изменить язык',
         'Login': 'Логин',
         'Password': 'Пароль',
