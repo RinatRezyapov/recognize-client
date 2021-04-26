@@ -1,11 +1,14 @@
-const config = {
+const production = {
   apiEndPointWs: 'wss://recognizzze.herokuapp.com',
   apiEndPointHttp: 'https://recognizzze.herokuapp.com',
 }
 
-const localConfig = {
+const dev = {
   apiEndPointWs: 'ws://localhost:3000',
   apiEndPointHttp: 'http://localhost:3000',
 }
 
-export default localConfig;
+export default {
+  production,
+  dev,
+};

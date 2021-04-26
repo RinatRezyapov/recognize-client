@@ -3,3 +3,4 @@ dlls
 www
 .firebase
 yarn.lock
+firebase-debug.log

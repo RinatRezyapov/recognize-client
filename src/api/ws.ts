@@ -1,5 +1,5 @@
 import { fromNullable, Option } from 'fp-ts/lib/Option';
-import config from '../config/config';
+import config from '../config';
 import ProtocolCommand from './protocol/ProtocolCommand';
 import { handleApiResponse } from './other/handleApiResponse';
 
@@ -29,7 +29,7 @@ export class WebSocketConnection {
   timeoutId: Option<any>;
 
   connect() {
-    const connection = new WebSocket(config.apiEndPointWs);
+    const connection = new WebSocket(config.production.apiEndPointWs);
 
     connection.onopen = () => {
       this.status = ConnectionStatus.Connected;

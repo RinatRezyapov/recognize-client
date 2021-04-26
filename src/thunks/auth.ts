@@ -2,12 +2,12 @@ import { Dispatch } from 'redux';
 import { fromNullable, Some } from 'fp-ts/lib/Option';
 import { to } from 'await-to-js';
 import { signIn, signInError, signOut } from '../actions/auth';
-import config from '../config/config';
+import config from '../config';
 import { changeSnackbarVisibility } from '../actions/ui';
 
 export const userSignIn = (login: string, password: string) =>
     async (dispatch: Dispatch) => {
-        const [optionalError, optionalResult] = await to(fetch(`${config.apiEndPointHttp}/login`, {
+        const [optionalError, optionalResult] = await to(fetch(`${config.production.apiEndPointHttp}/login`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -33,7 +33,7 @@ export const userSignIn = (login: string, password: string) =>
 
 export const userSignUp = (login: string, password: string, name: string) =>
     async (dispatch: Dispatch) => {
-        const [optionalError, optionalResult] = await to(fetch(`${config.apiEndPointHttp}/signup`, {
+        const [optionalError, optionalResult] = await to(fetch(`${config.production.apiEndPointHttp}/signup`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

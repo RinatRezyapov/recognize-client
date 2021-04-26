@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --mode development",
     "build-start": "npm run build-vendor && npm run build-entities && npm run start",
     "build": "cross-env NODE_ENV=production webpack --mode production",
+    "build-prod": "npm run build-vendor-prod && npm run build-entities-prod && npm run build",
     "build-vendor": "webpack --config vendor.config.js --mode development",
     "build-vendor-prod": "cross-env NODE_ENV=production webpack --config vendor.config.js --mode production",
     "build-entities": "webpack --config entities.config.js --mode development",
