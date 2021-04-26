@@ -2,11 +2,11 @@ This is a digital tachistoscope and at the same time my MERN playground.
 
 If you don't know what is tachistoscope, read article [You're Not as Smart as You Could Be](http://www.panshin.com/critics/Renshaw/notassmart/notassmart1.html)
 
-Demo: https://recognizzze.firebaseapp.com (Please don't use your real password)
+Demo: https://recognizzze.web.app/ (Please don't use your real passwords)
 
 It uses:
 
-[MLab](https://mlab.com) as MongoDB
+[MongoDB Cloud](https://www.mongodb.com/cloud) as DB
 
 [Heroku](https://www.heroku.com/) as NodeJS hosting
 
