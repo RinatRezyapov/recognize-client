@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { fromNullable, Option } from 'fp-ts/lib/Option';
 
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 import { Course, Id, User } from '../../api/entities';
 
@@ -68,7 +68,7 @@ const PlaceholderCourseCard: React.FunctionComponent<IProps> = ({
   }
 
   return (
-    <Card>
+    <Card variant='outlined' elevation={0}>
       <CardHeader
         title={'Welcome to Recognize'}
       />

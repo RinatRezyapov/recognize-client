@@ -11,12 +11,21 @@
 .Courses__search-panel-paper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 15px;
+  align-items: left;
+  padding: 16px;
+  .MuiFormControlLabel-root {
+    margin: 0;
+  }
+}
+
+.Courses__search-panel-checkbox {
+  .MuiTypography-root {
+    font-size: 0.9srem;
+  }
 }
 
 .Courses__search-button {
-  margin-right: 10px !important;
+  margin-right: 8px;
 }
 
 .Courses__search-result-panel {

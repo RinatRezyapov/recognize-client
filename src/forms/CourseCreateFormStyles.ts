@@ -1,5 +1,5 @@
-import { Theme } from '@material-ui/core/styles';
-import { grey } from '@material-ui/core/colors';
+import { Theme } from '@mui/material/styles';
+import { grey } from '@mui/material/colors';
 
 export const styles = (theme: Theme) => ({
   media: {

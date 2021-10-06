@@ -5,8 +5,8 @@ import {
   Field,
 } from 'redux-form';
 
-import Button from '@material-ui/core/Button/Button';
-import TextField from '@material-ui/core/TextField/TextField';
+import Button from '@mui/material/Button/Button';
+import TextField from '@mui/material/TextField/TextField';
 
 import withDialogProps, { IWithDialogProps } from '../decorators/withDialogProps';
 

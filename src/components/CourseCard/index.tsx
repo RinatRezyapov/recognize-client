@@ -5,28 +5,28 @@ import update from 'immutability-helper';
 import { fromNullable, none, Option } from 'fp-ts/lib/Option';
 import { History } from 'history';
 
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { withStyles, WithStyles } from '@mui/styles';
+import { Theme } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Tooltip from '@mui/material/Tooltip';
 
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 import { Course, ME, Id, User } from '../../api/entities';
 
@@ -42,21 +42,23 @@ import { UNDEFINED_MESSAGE } from '../../utils/constants';
 
 import './CourseCard.scss';
 
-export const styles = (theme: Theme) => ({
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    marginLeft: 'auto',
-    [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
+export const styles = (theme: Theme) => {
+  return ({
+    expand: {
+      transform: 'rotate(0deg)',
+      transition: theme?.transitions?.create('transform', {
+        duration: theme?.transitions?.duration?.shortest,
+      }),
+      marginLeft: 'auto',
+      [theme?.breakpoints?.up('sm')]: {
+        marginRight: -8,
+      },
     },
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-})
+    expandOpen: {
+      transform: 'rotate(180deg)',
+    },
+  })
+}
 
 interface IProps {
   course: ME<Course>;
@@ -68,7 +70,7 @@ interface IProps {
   updateCourse: (courseId: Id<Course>, data: { [key: string]: any }) => void;
 }
 
-const CourseCard: React.FunctionComponent<IProps & WithStyles> = ({
+const CourseCard: React.FunctionComponent<IProps & WithStyles<any>> = ({
   course,
   courseOwnerNameOpt,
   courseOwnerAvatarOpt,
@@ -246,7 +248,7 @@ const CourseCard: React.FunctionComponent<IProps & WithStyles> = ({
   )
 
   return (
-    <Card className='CourseCard__card'>
+    <Card className='CourseCard__card' variant='outlined' elevation={0}>
       {renderCardHeader()}
       <CardMedia
         className='CourseCard__media'
@@ -278,4 +280,4 @@ const CourseCard: React.FunctionComponent<IProps & WithStyles> = ({
   );
 }
 
-export default withStyles(styles as any)(CourseCard);
+export default withStyles(styles)(CourseCard);

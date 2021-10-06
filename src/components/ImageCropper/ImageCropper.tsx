@@ -3,9 +3,9 @@ import Cropper from 'react-cropper';
 
 import { fromNullable, Option } from 'fp-ts/lib/Option';
 
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
-import CropIcon from '@material-ui/icons/crop';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import CropIcon from '@mui/icons-material/crop';
 
 import 'cropperjs/dist/cropper.css';
 

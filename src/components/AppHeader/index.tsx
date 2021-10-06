@@ -2,17 +2,18 @@ import * as React from "react";
 import { none, Option, fromNullable } from "fp-ts/lib/Option";
 import { History } from "history";
 
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Typography from "@material-ui/core/Typography";
-import Toolbar from "@material-ui/core/Toolbar";
-import SettingsIcon from "@material-ui/icons/Settings";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import SettingsIcon from "@mui/icons-material/Settings";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 
 import { Id } from "../../api/entities";
 
@@ -103,6 +104,7 @@ const AppHeader: React.FunctionComponent<IProps> = ({
     <AppBar position="static" className="AppHeader__main-app-bar">
       <Toolbar className="AppHeader__tool-bar">
         <div className="AppHeader__left-tool-bar-group">
+          <RemoveRedEyeOutlinedIcon />
           <RecognizeLogo variant="h6" color="inherit">
             Recognize
           </RecognizeLogo>

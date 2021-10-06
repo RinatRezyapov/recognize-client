@@ -1,10 +1,10 @@
 import * as React from 'react';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import DropzoneRenderer from '../components/DropzoneRenderer';
-import CardMedia from '@material-ui/core/CardMedia';
+import CardMedia from '@mui/material/CardMedia';
 import { generateFileLink } from './converters';
-import { grey } from '@material-ui/core/colors';
-import Typography from '@material-ui/core/Typography';
+import { grey } from '@mui/material/colors';
+import Typography from '@mui/material/Typography';
 
 export const renderTextField = (props: any) => (
   <TextField

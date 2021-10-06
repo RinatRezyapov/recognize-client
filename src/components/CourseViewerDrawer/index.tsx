@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import TextField from '@material-ui/core/TextField';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TextField from '@mui/material/TextField';
+import { withStyles, WithStyles } from '@mui/styles';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { useI18n } from '../../hooks/useI18n';
 
@@ -31,7 +31,7 @@ interface IProps {
   onWordsCountChange: (value: number) => void;
 }
 
-const CourseViewerDrawer: React.FunctionComponent<IProps & WithStyles> = ({
+const CourseViewerDrawer: React.FunctionComponent<IProps & WithStyles<any>> = ({
   drawerOpen,
   classes,
   intervalMs,

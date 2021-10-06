@@ -24,7 +24,7 @@ export const userSignIn = (login: string, password: string) =>
                   const resultJSON = await result.json();
                   dispatch(signIn(resultJSON.token));
                 } else {
-                  dispatch(changeSnackbarVisibility({visible: true, message: new Some('Authorization is unsuccesful')}));
+                  dispatch(changeSnackbarVisibility({visible: true, message: new Some('Authentication failed')}));
                 }
             })
         fromNullable(optionalError)

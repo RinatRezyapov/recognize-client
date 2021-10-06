@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Option, isNone } from 'fp-ts/lib/Option';
 
-import Tooltip from '@material-ui/core/Tooltip';
-import { default as AvatarMaterial } from '@material-ui/core/Avatar';
+import Tooltip from '@mui/material/Tooltip';
+import { default as AvatarMaterial } from '@mui/material/Avatar';
 
 import { Id } from '../../api/entities';
 

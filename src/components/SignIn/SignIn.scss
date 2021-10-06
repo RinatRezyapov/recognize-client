@@ -1,3 +1,5 @@
+
+
 .SignIn__container {
   flex: 1;
   display: flex;
@@ -6,6 +8,10 @@
   align-items: center;
   position: relative;
   overflow: hidden;
+  .MuiSvgIcon-root {
+    color: #12a4d9;
+    z-index: -1;
+  }
 }
 
 .SignIn__paper {

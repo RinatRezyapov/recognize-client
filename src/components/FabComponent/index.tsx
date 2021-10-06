@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Option, none, fromNullable } from 'fp-ts/lib/Option';
 
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import Fab from '@mui/material/Fab';
 
 import { Course, Id, User } from '../../api/entities';
 

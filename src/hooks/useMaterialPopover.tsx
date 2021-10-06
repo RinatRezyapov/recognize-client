@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-import Popover, { PopoverOrigin } from '@material-ui/core/Popover';
+import Popover, { PopoverOrigin } from '@mui/material/Popover';
 import { Option, none } from 'fp-ts/lib/Option';
 
 export const useMaterialPopover = () => {

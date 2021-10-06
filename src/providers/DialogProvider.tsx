@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { fromNullable } from 'fp-ts/lib/Option';
 import DialogConstructor from './DialogConstructor';
 import { IWithDialogProps } from '../decorators/withDialogProps';

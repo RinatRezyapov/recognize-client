@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IconButton } from '@material-ui/core';
+import { IconButton } from '@mui/material';
 import Ru from '../../assets/icons/ru';
 import En from '../../assets/icons/en';
 import { useI18n } from '../../hooks/useI18n';

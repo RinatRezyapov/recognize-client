@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { fromNullable, none } from 'fp-ts/lib/Option';
 
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { ME, User } from '../../api/entities';
 import AvatarComponent from '../AvatarComponent';
@@ -31,7 +31,7 @@ const UserCard: React.FunctionComponent<IProps> = ({
   const userAvatarOpt = user.entity.avatar;
 
   return (
-    <Card className='UserCard__card'>
+    <Card className='UserCard__card' variant='outlined' elevation={0}>
       <CardMedia
         className='UserCard__media'
         image={require('../../assets/defaultProfile.png')}

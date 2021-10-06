@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Paper from '@material-ui/core/Paper/Paper';
+import Paper from '@mui/material/Paper';
 
 import { ME, User } from '../../api/entities';
 import UserCard from '../UserCard';
@@ -20,7 +20,7 @@ const Users: React.FunctionComponent<IProps> = ({
 
   return (
     <div className='Users__container'>
-      <Paper className='Users__left-panel'>
+      <Paper className='Users__left-panel' variant='outlined' elevation={0}>
         {t('Filter')}
       </Paper>
       <div className='Users__right-panel'>

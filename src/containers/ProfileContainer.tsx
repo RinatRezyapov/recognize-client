@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Option } from 'fp-ts/lib/Option';
 import { History } from 'history';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { Course, ME, User, Id } from '../api/entities';
 import Profile from '../components/Profile';

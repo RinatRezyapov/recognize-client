@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
-import { Divider, Typography } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper/Paper";
+import { Divider, Typography } from "@mui/material";
+import Paper from "@mui/material/Paper";
 import { isSome, Option } from "fp-ts/lib/Option";
 import * as React from "react";
 import { Redirect } from "react-router-dom";
 import SignInForm from "../../forms/SignInForm";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import "./SignIn.scss";
 interface IProps {
   token: Option<string>;
@@ -14,7 +14,7 @@ interface IProps {
 
 const SignIn: React.FunctionComponent<IProps> = ({ token, userSignIn }) => {
   const handleOnClick = (values: any) => {
-    userSignIn(values.login, values.password);
+    return userSignIn(values.login, values.password);
   };
 
   if (isSome(token)) {
@@ -24,7 +24,7 @@ const SignIn: React.FunctionComponent<IProps> = ({ token, userSignIn }) => {
   return (
     <div className="SignIn__container">
       <TheEye />
-      <Container>
+      <Container variant='outlined' elevation={0}>
         <SignInForm onSubmit={handleOnClick} />
         <VerticalDivider orientation="vertical" flexItem />
         <Typography variant="body2">
@@ -46,6 +46,7 @@ const Container = styled(Paper)`
   flex-direction: row;
   max-width: 500px;
   padding: 2rem;
+  background-color: white;
 `;
 
 const VerticalDivider = styled(Divider)`

@@ -4,21 +4,20 @@ import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 
 import configureStore, { history } from './store/configureStore'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme  } from '@mui/material/styles';
 import { DialogProvider } from './providers/DialogProvider';
 import { setToken } from './actions/auth';
 import { loadToken } from './store/sessionStorage';
 import { initializeWebSocket } from './utils/websocket';
 import App from './App';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
-    type: 'light',
     primary: {
-      main: '#319197',
+      main: '#d9138a',
     },
     secondary: {
-      main: '#af002d',
+      main: '#322e2f',
     },
   },
 });
@@ -36,11 +35,11 @@ const render = () => {
   ReactDOM.render(
     <AppContainer>
       <DialogProvider>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <Provider store={store}>
             <App history={history} />
           </Provider>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </DialogProvider>
     </AppContainer>,
     document.getElementById('root'),

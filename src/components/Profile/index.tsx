@@ -5,8 +5,8 @@ import { Option, fromNullable, some } from 'fp-ts/lib/Option';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import { History } from 'history';
 
-import Paper from '@material-ui/core/Paper/Paper';
-import Typography from '@material-ui/core/Typography';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 import { Course, ME, User, Id } from '../../api/entities';
 
@@ -117,7 +117,7 @@ const Profile: React.FunctionComponent<IProps> = ({
 
   const renderLeftPanel = () =>
     (
-      <Paper className='Profile__leftPanelPaper'>
+      <Paper className='Profile__leftPanelPaper' variant='outlined' elevation={0}>
         <Typography
           variant='h6'
           gutterBottom={true}

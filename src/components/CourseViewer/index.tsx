@@ -4,11 +4,11 @@ import { isNone, Option } from 'fp-ts/lib/Option';
 import { History } from 'history';
 import styled from '@emotion/styled'
 
-import TextField from '@material-ui/core/TextField';
-import { green, red, teal } from '@material-ui/core/colors';
-import IconButton from '@material-ui/core/IconButton';
-import ClearIcon from '@material-ui/icons/Clear';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import TextField from '@mui/material/TextField';
+import { green, red, teal } from '@mui/material/colors';
+import IconButton from '@mui/material/IconButton';
+import ClearIcon from '@mui/icons-material/Clear';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 import { Course, ME, Id } from '../../api/entities';
 

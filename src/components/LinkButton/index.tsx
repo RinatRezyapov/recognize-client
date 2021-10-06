@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
-import { PropTypes } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
+import { PropTypes } from "@mui/material";
+import Button, { ButtonPropsColorOverrides } from "@mui/material/Button";
 import * as React from "react";
 import { Link } from "react-router-dom";
 interface IProps {
   to: string;
   children: React.ReactNode;
-  color?: PropTypes.Color;
+  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
   type?: "light" | "dark";
+  disabled?: boolean;
   variant: any; // TODO
 }
 
@@ -16,13 +17,14 @@ const LinkButton: React.FunctionComponent<IProps> = ({
   children,
   color,
   type = "dark",
+  disabled,
   variant,
 }) => {
   const RenderedButton = type === "light" ? LightButton : Button;
 
   return (
     <StyledLink to={to}>
-      <RenderedButton color={color} variant={variant}>
+      <RenderedButton disabled={disabled} color={color} variant={variant}>
         {children}
       </RenderedButton>
     </StyledLink>

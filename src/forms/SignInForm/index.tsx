@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 
-import Button from '@material-ui/core/Button/Button';
-import TextField from '@material-ui/core/TextField/TextField';
+import Button from '@mui/material/Button/Button';
+import TextField from '@mui/material/TextField/TextField';
 
-import LinkButton from '../components/LinkButton';
-import withDialogProps, { IWithDialogProps } from '../decorators/withDialogProps';
+import LinkButton from '../../components/LinkButton';
+import withDialogProps, { IWithDialogProps } from '../../decorators/withDialogProps';
 
-import { useI18n } from '../hooks/useI18n';
+import { useI18n } from '../../hooks/useI18n';
+import { CircularProgress } from '@mui/material';
+
+import './SignInForm.scss';
 
 interface IBoundProps {
   onSubmit: (values: any) => any;
@@ -32,7 +35,7 @@ const SignInForm: React.FunctionComponent<IProps & InjectedFormProps<IProps> & I
 
   const { t } = useI18n();
 
-  const { handleSubmit } = props;
+  const { handleSubmit, submitting } = props;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -50,14 +53,15 @@ const SignInForm: React.FunctionComponent<IProps & InjectedFormProps<IProps> & I
         type='password'
         autocomplete='off'
       />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className='SignInForm__buttonsContainer'>
         <Button
+          className='SignInForm__signInButton'
           color='primary'
           variant='outlined'
           type='submit'
-          style={{ marginRight: 15 }}
+          disabled={submitting}
         >
-          {t('SignIn')}
+          {submitting ? <CircularProgress size={20} /> : t('SignIn')}
         </Button>
         <LinkButton
           to='/signup'

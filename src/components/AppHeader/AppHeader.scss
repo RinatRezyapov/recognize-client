@@ -1,14 +1,26 @@
+
+$typographyColor: #424242;
+
+
 .AppHeader__root-container {
   display: flex;
   flex-direction: column;
   width: 100%;
   .MuiPaper-root {
-    background: rgba(0, 0, 0, 0.25);
+    background:transparent;
+    box-shadow: none;
+  }
+  .MuiSvgIcon-root, .MuiButton-root, h6 {
+    color: $typographyColor;
+  }
+  .MuiSvgIcon-root {
+    margin-right: 16px;
   }
 }
 
 .AppHeader__main-app-bar {
   align-items: center;
+  margin-bottom: 32px;
 }
 
 .AppHeader__tool-bar {

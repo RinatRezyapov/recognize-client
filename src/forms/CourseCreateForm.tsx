@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { reduxForm, InjectedFormProps, Field } from 'redux-form';
 import { fromNullable, Option, some } from 'fp-ts/lib/Option';
 
-import Typography from '@material-ui/core/Typography';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
-import MenuItem from '@material-ui/core/MenuItem';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import Typography from '@mui/material/Typography';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import MenuItem from '@mui/material/MenuItem';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
 
 import { Id } from '../api/entities';
 

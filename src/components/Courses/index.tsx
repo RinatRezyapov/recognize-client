@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { Option, fromNullable } from 'fp-ts/lib/Option';
 import { History } from 'history';
 
-import Paper from '@material-ui/core/Paper/Paper';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import {
   Course,
@@ -95,14 +95,16 @@ const Courses: React.FunctionComponent<IProps> = ({
 
   const renderSearchPanel = () => (
     <div className='Courses__search-panel-container'>
-      <Paper className='Courses__search-panel-paper'>
+      <Paper className='Courses__search-panel-paper' variant='outlined' elevation={0}>
         <TextField
           label={t('Search value')}
           variant='outlined'
+          size='small'
           value={searchValue}
           onChange={searchValueChangeHandler}
         />
         <FormControlLabel
+          className='Courses__search-panel-checkbox'
           control={<Checkbox size='small' checked={exactsearch} onChange={onExactsearchChange} />}
           label={t('Exact search')}
         />
@@ -112,6 +114,7 @@ const Courses: React.FunctionComponent<IProps> = ({
             onClick={onCourseSearch}
             variant='outlined'
             color='primary'
+            size='small'
           >
             {t('Search')}
           </Button>
@@ -119,6 +122,7 @@ const Courses: React.FunctionComponent<IProps> = ({
             onClick={onCourseSearchClear}
             variant='outlined'
             color='secondary'
+            size='small'
           >
             {t('Clear')}
           </Button>

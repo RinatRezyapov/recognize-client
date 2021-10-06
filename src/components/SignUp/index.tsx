@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
-import { Button, Paper } from "@material-ui/core";
+import { Button, Paper } from "@mui/material";
 import { isSome, Option } from "fp-ts/lib/Option";
 import * as React from "react";
 import { Link, Redirect } from "react-router-dom";
 import SignUpForm from "../../forms/SignUpForm";
 import { useI18n } from "../../hooks/useI18n";
 import LinkButton from "../LinkButton";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import "./SignUp.scss";
 
 interface IProps {
@@ -28,7 +28,7 @@ const SignUp: React.FunctionComponent<IProps> = ({ token, userSignUp }) => {
   return (
     <div className="SignUp__container">
       <TheEye />
-      <Paper className="SignUp__paper">
+      <Paper className="SignUp__paper" variant='outlined' elevation={0}>
         <SignUpForm onSubmit={handleOnClick} />
       </Paper>
       <LinkButtonContainer>
