@@ -3,11 +3,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const dotenv = require('dotenv').config( {
   path: path.join(__dirname, '.env')
 } );
-console.log(dotenv.parsed)
+
 const plugins = [
   new HtmlWebpackPlugin({
     template: 'index.html',
@@ -39,7 +38,6 @@ if (process.env.NODE_ENV === 'production') {
       filepath: path.resolve(__dirname, './dlls/*.production.dll.js'),
       includeSourcemap: false
     }),
-    new UglifyJsPlugin(),
     new CleanWebpackPlugin(['www/*.*'], {
       root: __dirname,
       verbose: true,
@@ -66,11 +64,9 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   cache: true,
-
   devtool: process.env.NODE_ENV === 'production' ? 'nosources-source-map' : 'eval-cheap-module-source-map',
   devServer: {
-    hot: true,
-    contentBase: './src',
+    static: './src',
     historyApiFallback: true,
   },
   watch: false,
@@ -95,8 +91,8 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-      { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader" },
-      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.scss$/, use: ["style-loader", "css-loader", "sass-loader"] },
+      { test: /\.css$/, use: ["style-loader", "css-loader"] },
       {
         test : /\.(svg|gif|png)/,
         exclude: /(node_modules)/,

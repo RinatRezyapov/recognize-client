@@ -1,7 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const plugins = [];
 
@@ -11,7 +10,6 @@ if (process.env.NODE_ENV === 'production') {
         name: "vendor_production_[hash]",
         path: path.resolve(__dirname, "dlls/vendor_manifest_production.json")
     }),
-    new UglifyJsPlugin(),
     new CleanWebpackPlugin([ 'dlls/vendor_*.production.dll.js', 'vendor_manifest_production.json' ], {
       root: __dirname,
       verbose: true,
